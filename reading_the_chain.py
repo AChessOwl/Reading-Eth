@@ -146,7 +146,7 @@ if __name__ == "__main__":
 		else:
 			print(f"Block {block_num} is not ordered")
 
-  onchain_root, has_role, prime = get_contract_values(contract, admin_address, owner_address)
+onchain_root, has_role, prime = get_contract_values(contract, admin_address, owner_address)
     print(f"Merkle Root: {onchain_root.hex()}")
     print(f"Admin has DEFAULT_ADMIN_ROLE: {has_role}")
     print(f"Prime owned by {owner_address}: {prime}")
