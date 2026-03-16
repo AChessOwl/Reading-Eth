@@ -18,19 +18,23 @@ def connect_to_eth():
 
 
 def connect_with_middleware(contract_json):
-	url = "https://bsc-testnet.public.blastapi.io"  # BNB testnet RPC
-	w3 = Web3(HTTPProvider(url))
-	w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
-	assert w3.is_connected(), "Failed to connect to BNB testnet"
+    with open(contract_json, "r") as f:
+        data = json.load(f)
+        bsc_data = data['bsc']
+        address = bsc_data['address']
+        abi = bsc_data['abi']
 
-	with open(contract_json, "r") as f:
-		contract_info = json.load(f)
+    bnb_testnet_url = "https://data-seed-prebsc-1-s1.binance.org:8545/"
+    w3 = Web3(HTTPProvider(bnb_testnet_url))
+    assert w3.is_connected(), f"Failed to connect to BNB testnet at {bnb_testnet_url}"
 
-	contract = w3.eth.contract(
-		address=contract_info["address"],
-		abi=contract_info["abi"]
-	)
-	return w3, contract
+    w3.middleware_onion.inject(ExtraDataToPOAMiddleware, layer=0)
+
+    contract = w3.eth.contract(
+        address=Web3.to_checksum_address(address),
+        abi=abi
+    )
+    return w3, contract
 
 
 def is_ordered_block(w3, block_num):
