@@ -35,8 +35,6 @@ def get_ape_info(ape_id):
     data['owner'] = contract.functions.ownerOf(ape_id).call()
 
     token_uri = contract.functions.tokenURI(ape_id).call()
-    # token_uri is like: ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/1
-    # Convert ipfs:// URI to an HTTP gateway URL
     if token_uri.startswith("ipfs://"):
         ipfs_path = token_uri[len("ipfs://"):]
         metadata_url = IPFS_GATEWAY + ipfs_path
