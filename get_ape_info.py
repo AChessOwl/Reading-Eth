@@ -21,7 +21,7 @@ web3 = Web3(provider)
 
 
 # IPFS gateway to fetch metadata JSON
-IPFS_GATEWAY = "https://ipfs.infura.io:5001/api/v0/add"
+IPFS_GATEWAY = "https://ipfs.io/ipfs/"
 
 def get_ape_info(ape_id):
     assert isinstance(ape_id, int), f"{ape_id} is not an int"
